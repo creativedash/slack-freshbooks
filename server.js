@@ -27,7 +27,9 @@ app.get('/', function(req, res, next){
 app.post('/', function(req, res, next){
     var token   = req.body.token || '';
     var command = (req.body.text || '').split(' ')[0];
-    var args    = (req.body.text || '').split(' ').splice(1);
+    var args    = (req.body.text || '').split(' ');
+
+
 
     // Confirm that our account sent the slash command
     if (token !== config.Slack.token) {
@@ -47,7 +49,7 @@ app.post('/', function(req, res, next){
     }
 
     // Match on slash command
-    switch(args[0]){
+    switch(command){
         case 'list': return res.send('Show list of projects'); break;
         case 'status': return res.send('Show user status'); break;
         case 'start': return res.send('Start project'); break;
