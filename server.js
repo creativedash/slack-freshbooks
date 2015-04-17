@@ -22,20 +22,24 @@ app.use(bodyParser.json());
  */
 var slack = new Slack(config.Slack.token, true, true);
 
-slack.on('message', function(message){
-    console.log(message);
-});
-
 
 /**
  * Routes
  */
-app.get('/', function(req, res, next){ 
-    return res.send('Express running'); 
-});
-
 app.post('/', function(req, res, next){
-    console.log(req.body);
+    var token   = req.body.token || '';
+    var command = (req.body.text || '').split(' ')[0];
+    var args    = (req.body.text || '').split(' ').splice(1);
+
+    if (!command) return res.status(200).send('Invalid command');
+
+    Slack.message({
+        icon: ":ui8:",
+        message: 'Yo, testing. Ignore me for now.',
+        channel: req.body.channel_id,
+        username: "Freshbooks"
+    });
+
     return res.send('Goucher smells');
 });
 
