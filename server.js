@@ -45,9 +45,15 @@ app.post('/', function(req, res, next){
         ];
         return res.status(200).send(message.join('\n'));
     }
-    
 
-    return res.send('Goucher smells');
+    // Match on slash command
+    switch(args[0]){
+        case 'list': return res.send('Show list of projects'); break;
+        case 'status': return res.send('Show user status'); break;
+        case 'start': return res.send('Start project'); break;
+        case 'stop': return res.send('Stop project'); break; 
+        default: return res.send('Invalid command');
+    }
 });
 
 
