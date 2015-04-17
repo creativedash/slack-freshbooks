@@ -37,11 +37,11 @@ app.post('/', function(req, res, next){
     // Show list of commands if no command present
     if (!command) {
         var message = [
-            "Yo, here's a list of commands:",
-            'list',
-            'status',
-            'start [project name]',
-            'stop [project name]'
+            "Ready to start time tracking? Here's a list of commands:",
+            '/time list',
+            '/time status',
+            '/time start',
+            '/time stop'
         ];
         return res.status(200).send(message.join('\n'));
     }
