@@ -5,6 +5,13 @@
 var express         = require('express');
 var bodyParser      = require('body-parser');
 var config          = require('./config');
+var mongoose        = require('mongoose');
+
+
+/**
+ * Database settings
+ */
+mongoose.connect('mongodb://localhost/' + config.db.name);
 
 
 /**
@@ -30,7 +37,6 @@ app.post('/', function(req, res, next){
     var args    = (req.body.text || '').split(' ');
 
 
-
     // Confirm that our account sent the slash command
     if (token !== config.Slack.token) {
         return res.status(400).send('Invalid slack account');
@@ -50,11 +56,11 @@ app.post('/', function(req, res, next){
 
     // Match on slash command
     switch(command){
-        case 'list': return res.send('Show list of projects'); break;
-        case 'status': return res.send('Show user status'); break;
-        case 'start': return res.send('Start project'); break;
-        case 'stop': return res.send('Stop project'); break; 
-        default: return res.send('Invalid command');
+        case 'list':    return res.send('Show list of projects'); break;
+        case 'status':  return res.send('Show user status'); break;
+        case 'start':   return res.send('Start project'); break;
+        case 'stop':    return res.send('Stop project'); break; 
+        default:        return res.send('Invalid command');
     }
 });
 
