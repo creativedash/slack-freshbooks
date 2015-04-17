@@ -11,8 +11,8 @@ var config          = require('./config');
 /**
  * Express settings
  */
-// var port            = process.env.PORT || 3000;
-// var app             = express();
+var port            = process.env.PORT || 3000;
+var app             = express();
 
 
 /**
@@ -28,11 +28,11 @@ slack.on('message', function(message){
 /**
  * Routes
  */
-// app.get('/', function(req, res, next){ return res.send('cho'); });
+app.get('/', function(req, res, next){ return res.send('Express running'); });
 
 
 /**
  * Start server
  */
-// app.listen(port);
-// console.log('Express running on port ' + port);
+app.listen(port);
+console.log('Express running on port ' + port);
