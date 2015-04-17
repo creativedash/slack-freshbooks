@@ -4,7 +4,6 @@
  */
 var express         = require('express');
 var bodyParser      = require('body-parser');
-var Slack           = require('slack-client');
 var config          = require('./config');
 
 
@@ -18,27 +17,21 @@ app.use(bodyParser.json());
 
 
 /**
- * Slack settings
- */
-var slack = new Slack(config.Slack.token, true, true);
-
-
-/**
  * Routes
  */
+app.get('/', function(req, res, next){
+    return res.send('Slack integration for Freshbooks');
+});
+
+
 app.post('/', function(req, res, next){
     var token   = req.body.token || '';
     var command = (req.body.text || '').split(' ')[0];
     var args    = (req.body.text || '').split(' ').splice(1);
 
-    if (!command) return res.status(200).send('Invalid command');
-
-    Slack.message({
-        icon: ":ui8:",
-        message: 'Yo, testing. Ignore me for now.',
-        channel: req.body.channel_id,
-        username: "Freshbooks"
-    });
+    if (!command) return res.status(400).send('Invalid command');
+    if (token !== config.Slack.token) return res.status(400).send('Invalid slack account');
+    
 
     return res.send('Goucher smells');
 });
