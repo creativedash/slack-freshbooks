@@ -29,8 +29,22 @@ app.post('/', function(req, res, next){
     var command = (req.body.text || '').split(' ')[0];
     var args    = (req.body.text || '').split(' ').splice(1);
 
-    if (!command) return res.status(400).send('Invalid command');
-    if (token !== config.Slack.token) return res.status(400).send('Invalid slack account');
+    // Confirm that our account sent the slash command
+    if (token !== config.Slack.token) {
+        return res.status(400).send('Invalid slack account');
+    }
+
+    // Show list of commands if no command present
+    if (!command) {
+        var message = [
+            "Yo, here's a list of commands:",
+            'list',
+            'status',
+            'start [project name]',
+            'stop [project name]'
+        ];
+        return res.status(200).send(message.join('\n'));
+    }
     
 
     return res.send('Goucher smells');
